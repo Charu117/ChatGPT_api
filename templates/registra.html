@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <title>Registra</title>
+    <style>
+        body{
+          background-image: url("https://picsum.photos/1920/1080?grayscale");
+          background-size: cover;
+        }
+        .jumbotron {
+          font-family: 'Poppins', sans-serif;
+          background-color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body class="text-center">
+    <div class="container pt-4 pb-3">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col" id="form">
+                    <div class="jumbotron py-5 px-4">
+                    <form method="post" id="registra">
+                        <h1 class="h2 mb-3 fw-bolder" style="font-family: 'Lora', serif;">Registrazione</h1>
+                        <div class="form-floating pb-2">
+                            <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome">
+                            <label for="nome">Nome</label>
+                        </div>
+                        <div class="form-floating pb-2">
+                            <input type="text" class="form-control" id="cognome" placeholder="Cognome" name="cognome">
+                            <label for="cognome">Cognome</label>
+                        </div>
+                        <div class="form-floating pb-2">
+                            <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="form-floating pb-2">
+                            <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="form-floating pb-2">
+                            <input type="password" class="form-control" id="conf_passwd" placeholder="Confirm Password" name="conf_passwd" required>
+                            <label for="conf_passwd">Conferma Password</label>
+                        </div>
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Registra</button>
+                        <p class="mt-5 mb-3 text-muted">Hai già un account?<a href="/login">Accedi!</a></p>
+                        <p class="mt-5 mb-3 text-danger" id="result"></p>
+                    </form>
+                    </div>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('form').on('submit',function(event){
+                var passwd = $('#password').val()
+                var conf_passwd = $('#conf_passwd').val()
+                if(passwd === conf_passwd){
+                    $.ajax({
+                        data : {
+                            nome : $('#nome').val(),
+                            cognome : $('#cognome').val(),
+                            email : $('#email').val(),
+                            password : passwd
+                        },
+                        type : 'POST',
+                        url : '/insertUser'
+                    })
+                    .done(function(data) {
+                        if(data === "Success"){
+                            window.location.href = '/home'
+                        }else{
+                            $('#result').text("La registrazione non è andata a buon fine!")
+                        }
+                    });
+                        event.preventDefault();
+                }else{
+                    $('#result').val("Le password non corrispondono")
+                }  
+            })
+        })
+    </script>
+</body>
+</html>

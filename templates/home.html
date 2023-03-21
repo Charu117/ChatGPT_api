@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300&family=Noto+Serif:wght@400;700&family=Zilla+Slab:wght@500&display=swap" rel="stylesheet">
+  <title>Ripasso</title>
+  <style>
+    #heading{
+      font-family: 'Noto Serif', serif;
+    }
+  </style>
+
+</head>
+<body class="bg-dark">
+  <div class="d-flex flex-row">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark border-end" style="width: 280px;height: 48rem;">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <img src="https://img.icons8.com/emoji/48/null/books-emoji.png"/>&nbsp;&nbsp;<h5 id="heading">Ripetizioni</h5>
+      </a>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item"><a href="" class="nav-link text-white" aria-current="page">
+          <p class="fs-5"><strong><i class="bi bi-house"></i>&nbsp;&nbsp;Home</strong></p></a>
+        </li>
+        <li><a href="/search" class="nav-link text-white"><p class="fs-5"><strong><i class="bi bi-search"></i>
+          &nbsp;&nbsp;Cerca</strong></p></a>
+        </li>
+        <li>
+          <a href="/materie" class="nav-link text-white">
+            <p class="fs-5"><strong><i class="bi bi-book"></i>&nbsp;&nbsp;Materie</strong></p></a>
+        </li>
+      </ul>
+      <hr>
+      <div class="d-flex dropup-center dropup" data-bs-theme="dark">
+        <button type="button" class="btn btn-outline-primary dropdown-toggle w-100" data-bs-toggle="dropdown" id="Mydropdown">
+        </button>
+        <ul class="dropdown-menu">
+          <li><button class="dropdown-item" type="button" id="logOut">Log Out</button></li>
+        </ul>
+      </div>
+  </div>
+   <div class="d-flex flex-row p-3 text-white bg-dark justify-content-center" style="width: 73rem;">
+      <form method="post" class="p-5 border border-primary">
+        <div class="mt-2 mb-2">
+          <h5>"Fai una domanda a ChatGPT e scopri quanto può ampliare la tua conoscenza!"</h5>
+        </div>
+          <div class="mt-3 mb-3" style="width: 30rem;">
+              <label for="exampleFormControlInput1" class="form-label"></label>
+                  <div class="input-group">
+                      <input type="text" class="form-control" id="domanda" name="domanda" placeholder="Inserisci la domanda">
+                      <button type="submit" class="btn btn-primary" name="ask-btn" id="ask-btn" value="Invia"><i class="bi bi-send"></i>
+                      </button>
+                  </div>
+              </div>
+              <div class="mb-3">
+                  <label for="TextArea" class="form-label">Risposta</label>
+                  <textarea class="form-control" id="response" cols="8" rows="5"></textarea>
+                  <hr>
+                  <select class="form-select mt-3" id="materia" name="materia">
+                    <option selected>Seleziona la materia...</option>
+                  </select>
+                  <select class="form-select mt-3" id="uda" name="uda">
+                    <option selected>Seleziona l'UDA..</option>
+                  </select>
+                  <button class="btn btn-danger mt-3" id="reset"><i class="bi bi-arrow-clockwise"></i>
+                    &nbsp;Resetta le UDA</button>
+                  <input type="button" class="btn btn-primary mt-3" name="save-btn" id="save-btn" value="Salva">
+                  <div class="mt-3"><p id="outputSave"></p></div>
+              </div>
+          </div>
+      </form>
+      <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <img src="https://img.icons8.com/emoji/48/null/books-emoji.png" class="rounded me-2" alt="...">
+            <strong class="me-auto">Ripetizioni</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body" id="tbody">
+            
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<script>
+    $(document).ready(function() {
+      // For Dropdown button
+      const dropdownElementList = document.querySelectorAll('.dropdown-toggle')
+      const dropdownList = [...dropdownElementList].map(dropdownToggleEl => new bootstrap.Dropdown(dropdownToggleEl))
+
+      // reset button for UDA
+      $('#reset').on('click', function(event){
+        $('#materie').empty();
+        $('#uda').empty()
+        event.preventDefault();
+      })
+      // Ajax request to get current user name
+      $.ajax({
+        url : '/getCurrentUser',
+        type : 'GET',
+        success : function(data) {
+          $('#Mydropdown').text("@" + data)
+        }
+      })
+
+      // Ajax request to get all the subjects
+      $.ajax({
+        url : '/materieUda',
+        type : 'GET',
+        success: function(data){
+          var jsonData = JSON.parse(data);
+          $.each(jsonData, function(index, item) {
+              var option = $('<option>').val(item.nomeMateria).text(item.nomeMateria);
+              console.log(item.nomeMateria)
+            // Append the option to the select element
+            $('#materia').append(option);
+          });
+          
+        }
+      })
+      // when an option(subject) is selected from the select list, an ajax request is done to get all the UDA according to the subject selected
+      $('#materia').change(function(){
+        var selectedOption = $(this).val();
+        $.ajax({
+        data : {
+          uda : selectedOption
+        },
+        type : 'POST',
+        url : '/getUda',
+        success : function(data){
+          var jsonData = JSON.parse(data);
+          $.each(jsonData, function(index, item) {
+              var option = $('<option>').val(item.idUda).text(item.nomeUda);
+              console.log(item.idUda)
+              // Append the option to the select element
+              $('#uda').append(option)
+          })
+        }
+      })
+      })
+      // When the form is on submit, through an ajax request, this function sends a question to the back end and gets an answer
+      $('form').on('submit', function(event) {
+        event.preventDefault();
+        var question = $('#domanda').val()
+        if(question !== ""){
+          $.ajax({
+            data : {
+              question : $('#domanda').val()
+              },
+              type : 'POST',
+              url : '/sendData'
+              })
+          .done(function(data) {
+            $('#response').val(data);
+            console.log(data);
+          });
+        }else{
+          const toastLiveExample = document.getElementById('liveToast')
+          toastLiveExample.classList.add('text-bg-danger')
+          $('#tbody').text('Inserisci una domanda!')
+          const toast = new bootstrap.Toast(toastLiveExample)
+          toast.show()
+        }
+        
+        
+      });
+        // When the save btn is clicked all the data is sent to the back end
+        $('#save-btn').on('click', function(event){
+          var question =  $('#domanda').val()
+          var answer = $('#response').val()
+
+          if(question == "" && answer == ""){
+            const toastLiveExample = document.getElementById('liveToast')
+            toastLiveExample.classList.add('text-bg-danger')
+              $('#tbody').text('Controlla se i campi sono vuoti!')
+              const toast = new bootstrap.Toast(toastLiveExample)
+              toast.show()
+            //$('#outputSave').addClass('text-danger')
+            //$('#outputSave').text("I campi sono vuoti");
+          }else{
+            $.ajax({
+              data:{
+                question : $('#domanda').val(),
+                answer : $('#response').val(),
+                materia : $('#materia').val(),
+                uda : $('#uda').val()
+              },
+              type : 'POST',
+              url : '/newDomanda'
+            })
+            .done(function(){
+              const toastLiveExample = document.getElementById('liveToast')
+              toastLiveExample.classList.add('text-bg-success')
+              $('#tbody').text('I dati sono stati salvati correttamenti!')
+              const toast = new bootstrap.Toast(toastLiveExample)
+              toast.show()
+              //$('#outputSave').text("Salvato con successo");
+            })
+          }
+          
+          event.preventDefault();
+        })
+        // log out funzione
+        $('#logOut').on('click', function(event){
+          event.preventDefault()
+          $.ajax({
+            url : '/logOut',
+            success : function(){
+              window.location.href = '/login'
+            }
+          })
+        })
+    });
+</script>
+</div>
+</body>
+</html>

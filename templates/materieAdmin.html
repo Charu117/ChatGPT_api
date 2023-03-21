@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300&family=Noto+Serif:wght@400;700&family=Zilla+Slab:wght@500&display=swap" rel="stylesheet">
+
+    <title>Materie</title>
+    <style>
+        .card{
+            background-color: rgba(104, 132, 218, 0.698);
+            color: white;
+            border: 1px solid #ffffff;
+        }
+        .card-header{
+            border-bottom: 1px solid #ffffff;
+            font-size: 1.2rem;
+            font-family: 'Noto Serif', serif;
+        }
+        .card-text{
+            font-size: 1.3rem;
+            font-family: 'Barlow Condensed', sans-serif;
+        }
+        .scrollable {
+            height: 46rem; /* set a fixed height for the scrollable area */
+            overflow: scroll; /* create a scrollable area */
+        }
+        .uda{
+            font-family: 'Zilla Slab', serif;
+            font-size: 1.5rem;
+        }
+        #headingM{
+            font-family: 'Noto Serif', serif;
+        }
+        .list{
+            font-family: 'Noto Serif', serif;
+            height: 3.5rem !important;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="d-flex flex-row">
+        <div class="d-flex flex-column flex-shrink-0 bg-dark border-end" style="width: 4rem;height: 48rem;">
+            <a href="/dashboardMenu" class="d-block p-3 link-light text-decoration-none text-center" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+                <h5><i class="bi bi-arrow-left"></i></h5>
+                <span class="visually-hidden">Icon-only</span>
+            </a>
+            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                <li class="nav-item">
+                    <a href="/dashboardMenu" class="nav-link text-white py-3 rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Home" data-bs-original-title="Home">
+                        <h5 class="fw-bold"><i class="bi bi-house"></i></h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="/AllQuestions" class="nav-link active text-white py-3 rounded-0 bg-gradient" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Orders" data-bs-original-title="Orders">
+                        <h5 class="fw-bold"><i class="bi bi-book"></i></h5>
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <div class="d-flex dropup-center dropup mb-2" data-bs-theme="dark">
+                <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 rounded-end-5 rounded-bottom-5 rounded-5" data-bs-toggle="dropdown" id="Mydropdown"><i class="bi bi-person-circle"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><button class="dropdown-item" type="button" id="logOut">Log Out</button></li>
+                </ul>
+            </div>
+        </div>
+        <div class="d-flex flex-column text-white bg-dark border-end" style="width: 280px;height: 48rem;">
+            <ul class="nav nav-pills flex-column mb-auto" id="sideNav">
+                <li class="nav-item">
+                    <div class="text-center mb-2 mt-2">
+                        <img src="https://img.icons8.com/emoji/48/null/books-emoji.png"/>&nbsp;&nbsp;<p id="headingM">Ripeti con chatGPT</p>
+                    </div>
+                </li>
+                <li class="nav-item" id="button-group">
+                    <button class="w-100 btn btn-outline-light rounded-0 list" id="Informatica">Informatica</button>
+                    <button class="w-100 btn btn-outline-light rounded-0 list" id="Matematica">Matematica</button>
+                    <button class="w-100 btn btn-outline-light rounded-0 list" id="TPSIT">TPSI</button>
+                    <button class="w-100 btn btn-outline-light rounded-0 list" id="Sistemi">Sistemi e Reti</button>
+                    <button class="w-100 btn btn-outline-light rounded-0 list" id="Italiano">Italiano</button>
+                    <button class="w-100 btn btn-outline-light rounded-0 list" id="Storia">Storia</button>
+                    <button class="w-100 btn btn-outline-light rounded-0 list" id="Inglese">Inglese</button>
+                    <button class="w-100 btn btn-outline-light rounded-0 list" id="GPOI">GPOI</button>
+                </li>
+            </ul>
+        </div>
+        <div class="d-flex flex-row p-3 bg-dark overflow-scroll" style="width: 73rem;">
+            <div class="card-container">
+                <div hidden>
+                    <div class="card template mb-3">
+                        <div class="card-header">
+                        </div>
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                            <p class="card-text"></p>
+                            </blockquote>
+                        </div>
+                        </div>
+                </div>
+            </div>
+            <div class="scrollable">
+                <div class="container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.list').on('click',function(e){
+                $(".cards-container div").not(".cards").remove();
+                $(".container div").not(".cards").remove();
+               
+                var buttonId = $(this).attr('id');
+                $.ajax({
+                    data : {materia : buttonId},
+                    type : 'POST',
+                    url : '/getAllQuestions',
+                    success: (function(data) {
+                        var jsonData = JSON.parse(data);
+                        var cardTemplate = $('.card.template'); // Select the template div
+                        var prevUda = 0
+
+                        $.each(jsonData, function(index, obj) {
+                            if(prevUda !== obj.idUda){
+                                var divs = $('<div class="cards-container" id="idUda-'+ obj.idUda +'">')
+                                prevUda = obj.idUda
+                                divs.appendTo('.container')
+                            }
+                        })
+
+                        $.each(jsonData, function(index, item) {
+                            var id = "#" + item.idUda
+                            var idToAppend = '#idUda-' + item.idUda
+                            const elementDiv = $("#" + item.idUda);
+
+                            var card = cardTemplate.clone(); // Clone the template div
+                            card.removeClass('template'); // Remove the template class from the cloned div
+                            card.find('.card-header').text(item.domanda);
+                            card.find('.card-text').text(item.risposta);
+
+                            if (elementDiv.length > 0) {
+                                card.appendTo(id)
+                                $(id).appendTo(idToAppend)
+                            } else {
+                                //console.log("Element with id " + idToCheck + " does not exist on the page");
+                                var newDiv = $('<div class="innerDiv" id="'+ item.idUda +'"></div>')
+                                var newHeader = $('<div><p class="lead text-white uda">'+ item.Uda + '<p></div>')
+                                newHeader.appendTo(newDiv)
+                                card.appendTo(newDiv);
+                                newDiv.appendTo(idToAppend)
+                            }
+                        });
+                        console.log(data)
+                    })
+                })
+            })
+
+        });
+    </script>
+</body>
+</html>
