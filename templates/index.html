@@ -1,32 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% extends 'layout.html' %}
+    
+    {% block title %}Welcome!{% endblock title%}
+    {% block links %}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
-
-    <title>Welcome!</title>
     <style>
         body{
           background-image: url("https://picsum.photos/1920/1080?grayscale");
           background-size: cover;
         }
-        .jumbotron {
+        .jumbotron#welcomeNote{
           font-family: 'Poppins', sans-serif;
           background-color: rgba(255, 255, 255, 0.7);
           margin-top: 10rem;
         }
+        #register, #login{
+          background: none!important;
+          border: none;
+          padding: 0!important;
+          /*optional*/
+          font-family: arial, sans-serif;
+          /*input has OS specific font-family*/
+          color: #069;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+        .jumbotron {
+          font-family: 'Poppins', sans-serif;
+          background-color: rgba(255, 255, 255, 0.7);
+        }
+        
       </style>
-</head>
-<body class="d-flex h-100 text-center">
+      {% endblock links%}
+{% block content%}
+<div id="loadingMask" style="width: 100%; height: 100%; position: fixed; background: #fff;">Loading...</div>
+<div id="home">
   <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column text-white">
     <header class="mb-auto">
       <div>
@@ -38,17 +45,149 @@
       </div>
     </header>
     <div class="container text-black w-50 h-75 pt-2 p-3">
-      <div class="jumbotron pt-2 p-3 mt-5">
+      <div class="jumbotron pt-2 p-3 mt-5" id="welcomeNote">
           <h4 class="display-5 fw-bold">Ripeti con ChatGPT!</h4>
           <p class="">Benvenuto nel nostro sito di ripetizioni! Siamo qui per aiutarti a raggiungere il tuo massimo potenziale accademico e supportarti lungo il percorso di apprendimento. Siamo fiduciosi che troverai i nostri servizi utili e ti auguriamo un grande successo nei tuoi studi.</p>
           <hr class="my-4">
           <p>Accedi ora al tuo archivio!</p>
-          <a class="btn btn-primary btn-lg" href="/registra" role="button">Accedi!</a>
+          <button class="btn btn-primary btn-lg" id="indexBtn">Accedi!</button>
       </div>
       </div>
     <footer class="mt-5 text-white-50">
       <p>Powered by OpenAi</p>
     </footer>
-  </div>  
-</body>
-</html>
+  </div>
+</div>
+<div id="loginBlock">
+  <div class="cover-container d-flex w-50 h-100 p-3 mx-auto flex-column text-white">
+      <div class="container text-black w-50 h-75 pt-2 p-3">
+          <div class="jumbotron py-5 px-4">
+          <form method="post" id="loginForm">
+              <h1 class="h2 mb-3 fw-bold" style="font-family: 'Lora', serif;">Accedi qui al tuo Account</h1>
+              <div class="form-floating pb-2">
+                  <input type="email" class="form-control" id="emailLogin" placeholder="name@example.com">
+                  <label for="email">Email</label>
+              </div>
+              <div class="form-floating pb-2">
+                  <input type="password" class="form-control" id="passwordLogin" placeholder="Password" name="passwordLogin">
+                  <label for="password">Password</label>
+              </div>
+              <button class="w-100 btn btn-lg btn-primary" type="submit">Accedi</button>
+              <p class="mt-5 mb-3 text-muted">Non hai un account?<button id="register">Registrati!</button></p>
+              <p class="mt-5 mb-3 text-danger" id="result"></p>
+          </form>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div id="registerBlock">
+  <div class="cover-container d-flex w-75 h-100 p-3 mx-auto flex-column">
+    <div class="container text-black w-50 h-75 pt-2 p-3" id="form">
+        <div class="jumbotron py-5 px-4">
+          <form method="post" id="registra">
+              <h1 class="h2 mb-3 fw-bolder" style="font-family: 'Lora', serif;">Registrazione</h1>
+              <div class="form-floating pb-2">
+                  <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome">
+                  <label for="nome">Nome</label>
+              </div>
+              <div class="form-floating pb-2">
+                  <input type="text" class="form-control" id="cognome" placeholder="Cognome" name="cognome">
+                  <label for="cognome">Cognome</label>
+              </div>
+              <div class="form-floating pb-2">
+                  <input type="email" class="form-control" id="emailReg" placeholder="name@example.com" required>
+                  <label for="email">Email</label>
+              </div>
+              <div class="form-floating pb-2">
+                  <input type="password" class="form-control" id="passwordReg" placeholder="Password" name="passwordReg" required>
+                  <label for="password">Password</label>
+              </div>
+              <div class="form-floating pb-2">
+                  <input type="password" class="form-control" id="conf_passwd" placeholder="Confirm Password" name="conf_passwd" required>
+                  <label for="conf_passwd">Conferma Password</label>
+              </div>
+              <button class="w-100 btn btn-lg btn-primary" type="submit">Registra</button>
+              <p class="mt-5 mb-3 text-muted">Hai già un account?<button id="login">Accedi!</button></p>
+              <p class="mt-5 mb-3 text-danger" id="result"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $('#loadingMask').fadeOut();
+    $('#loginBlock').hide()
+    $('#registerBlock').hide()
+
+    $('#indexBtn').click(function(){
+      $('#home').hide()
+      $('#registerBlock').toggle()
+
+    })
+    $('#register').click(function(){
+      $('#home').hide()
+      $('#loginBlock').hide()
+      $('#registerBlock').toggle()
+
+    })
+    $('#login').click(function(){
+      $('#home').hide()
+      $('#loginBlock').toggle()
+      $('#registerBlock').hide()
+
+    })
+
+    $('#registra').on('submit',function(event){
+      var passwd = $('#passwordReg').val()
+      var conf_passwd = $('#conf_passwd').val()
+      if(passwd === conf_passwd){
+          $.ajax({
+              data : {
+                  nome : $('#nome').val(),
+                  cognome : $('#cognome').val(),
+                  email : $('#emailReg').val(),
+                  password : passwd
+              },
+              type : 'POST',
+              url : '/insertUser'
+          })
+          .done(function(data) {
+              if(data === "Success"){
+                  window.location.href = '/home'
+              }else{
+                  $('#result').text("La registrazione non è andata a buon fine!")
+              }
+          });
+              event.preventDefault();
+      }else{
+          $('#result').val("Le password non corrispondono")
+      }  
+    })
+    $('#loginForm').on('submit',function(event){
+      $.ajax({
+          data : {
+              email : $('#emailLogin').val(),
+              password : $('#passwordLogin').val()
+          },
+          type : 'POST',
+          url : '/verifyUser'
+      })
+      .done(function(data) {
+          if(data === "Verified"){
+              window.location.href = '/home';
+          }else{
+              $('#result').text("Le credenziali non sono corrette!")
+          }
+          console.log(data)
+      });
+          event.preventDefault()
+    })
+
+
+  })
+</script>
+  
+{% endblock content%}

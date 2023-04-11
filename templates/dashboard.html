@@ -1,57 +1,359 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Poppins:wght@300&display=swap" rel="stylesheet">
-    <title>Ripasso</title>
+{% extends 'layout.html' %}
+    {% block title%} Ripasso {% endblock title %}
+    {% block links%}
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Poppins:wght@300&display=swap" rel="stylesheet">    
     <style>
         body{
-          background-image: url("https://picsum.photos/1920/1080");
+          background-image: url("https://picsum.photos/1920/1080?grayscale");
           background-size: cover;
         }
+        
+        .scrollable {
+            height: 41rem; /* set a fixed height for the scrollable area */
+            overflow: scroll; /* create a scrollable area */
+        }
+        
+        .scrollable#cards{
+            height: 46rem; /* set a fixed height for the scrollable area */
+            overflow: scroll; /* create a scrollable area */
+        }
+        .card{
+            background-color: rgba(104, 132, 218, 0.698);
+            color: white;
+            border: 1px solid #ffffff;
+        }
+        .card-header{
+            border-bottom: 1px solid #ffffff;
+            font-size: 1.2rem;
+            font-family: 'Noto Serif', serif;
+        }
+        .card-text{
+            font-size: 1.3rem;
+            font-family: 'Barlow Condensed', sans-serif;
+        }
+        .uda{
+            font-family: 'Zilla Slab', serif;
+            font-size: 1.5rem;
+        }
+
+        #headingM{
+            font-family: 'Noto Serif', serif;
+        }
+        .list{
+            font-family: 'Noto Serif', serif;
+            height: 3.5rem !important;
+        }
         .jumbotron {
-          font-family: 'Poppins', sans-serif;
-          background-color: rgba(255, 255, 255, 0.7);
+            font-family: 'Poppins', sans-serif;
+            background-color: rgba(255, 255, 255, 0.7);
         }
     </style>
-</head>
-<body class="text-center">
-    <div class="container pt-5">
-        <div class="row">
-            <div class="col"></div>
-            <div class="col">
-                <div class="jumbotron py-5 px-4">
-                <form method="post">
-                    <h1 class="h2 mb-3 fw-bold" style="font-family: 'Lora', serif;">Accedi al Dashboard</h1>
-                    <div class="form-floating pb-2">
-                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
-                        <label for="email">Email</label>
+    {% endblock links%}
+
+    {% block content%}
+    <div id="loadingMask" style="width: 100%; height: 100%; position: fixed; background: #fff;">Loading...</div>
+
+    <div id="adminLogin">
+        <div class="container pt-5">
+            <div class="cover-container d-flex w-75 h-100 p-3 mx-auto flex-column text-white">
+                <div class="container text-black w-50 h-75 pt-2 p-3">
+                    <div class="jumbotron py-5 px-4">
+                    <form method="post" id="loginAdmin">
+                        <h1 class="h2 mb-3 fw-bold" style="font-family: 'Lora', serif;">Accedi al Dashboard</h1>
+                        <div class="form-floating pb-2">
+                            <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="form-floating pb-2">
+                            <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                            <label for="password">Password</label>
+                        </div>
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Accedi</button>
+                        <p class="mt-5 mb-3 text-danger" id="result"></p>
+                    </form>
                     </div>
-                    <div class="form-floating pb-2">
-                        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
-                        <label for="password">Password</label>
-                    </div>
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Accedi</button>
-                    <p class="mt-5 mb-3 text-danger" id="result"></p>
-                </form>
                 </div>
+                
             </div>
-            <div class="col"></div>
         </div>
     </div>
+    <div id="dashboardHome">
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark border-end" style="width: 13rem;height: 48rem;">
+                <a href="/dashboardMenu" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <img src="https://img.icons8.com/emoji/48/null/books-emoji.png"/>&nbsp;&nbsp;<h5 id="heading">Ripetizioni</h5>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item"><a href="" class="nav-link text-white" aria-current="page">
+                    <p class="fs-5"><strong><i class="bi bi-house"></i>&nbsp;&nbsp;Home</strong></p></a>
+                    </li>
+                    <li>
+                        <button id="showAllQuestionsHome" class="nav-link text-white">
+                            <p class="fs-5"><strong><i class="bi bi-book"></i>&nbsp;&nbsp;Materie</strong></p>
+                        </button>
+                    </li>
+                    <li>
+                        <button id="showQuiz" class="nav-link text-white">
+                        <p class="fs-5"><strong><i class="bi bi-list-check"></i>&nbsp;&nbsp;Quiz</strong></p></button>
+                    </li>
+                </ul>
+                <hr>
+                <div class="d-flex dropup-center dropup mb-2" data-bs-theme="dark">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle w-100" data-bs-toggle="dropdown" id="Mydropdown"><i class="bi bi-person-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                    <li><button class="dropdown-item" type="button" id="logOut">Log Out</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex flex-row p-3 text-white bg-dark" style="width: 86rem;">
+                <div class="container-sm" style="width: 50rem; height: 40rem;">
+                    <div class="display-5 mb-3" style="font-family: 'Lora', serif;">Benvenuto al Dashboard!</div>
+                    <div class="scrollable">
+                        <canvas id="adminChart" class="mb-3"></canvas>
+                        <hr>
+                        <canvas id="bar"></canvas>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div id="getAllQuestions">
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-column flex-shrink-0 bg-dark border-end" style="width: 4rem;height: 48rem;">
+                <a href="/dashboardMenu" class="d-block p-3 link-light text-decoration-none text-center" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+                    <h5><i class="bi bi-arrow-left"></i></h5>
+                    <span class="visually-hidden">Icon-only</span>
+                </a>
+                <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                    <li class="nav-item">
+                        <a href="/dashboardMenu" class="nav-link text-white py-3 rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Home" data-bs-original-title="Home">
+                            <h5 class="fw-bold"><i class="bi bi-house"></i></h5>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/AllQuestions" class="nav-link active text-white py-3 rounded-0 bg-gradient" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Orders" data-bs-original-title="Orders">
+                            <h5 class="fw-bold"><i class="bi bi-book"></i></h5>
+                        </a>
+                    </li>
+                    <li>
+                        <button id="showQuiz" class="nav-link text-white">
+                        <p class="fs-5"><strong><i class="bi bi-list-check"></i>&nbsp;&nbsp;Quiz</strong></p></button>
+                    </li>
+                </ul>
+                <hr>
+                <div class="d-flex dropup-center dropup mb-2" data-bs-theme="dark">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 rounded-end-5 rounded-bottom-5 rounded-5" data-bs-toggle="dropdown" id="Mydropdown"><i class="bi bi-person-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button class="dropdown-item" type="button" id="logOut">Log Out</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex flex-column text-white bg-dark border-end" style="width: 280px;height: 48rem;">
+                <ul class="nav nav-pills flex-column mb-auto" id="sideNav">
+                    <li class="nav-item">
+                        <div class="text-center mb-2 mt-2">
+                            <img src="https://img.icons8.com/emoji/48/null/books-emoji.png"/>&nbsp;&nbsp;<p id="headingM">Ripeti con chatGPT</p>
+                        </div>
+                    </li>
+                    <li class="nav-item" id="button-group">
+                        <button class="w-100 btn btn-outline-light rounded-0 list" id="Informatica">Informatica</button>
+                        <button class="w-100 btn btn-outline-light rounded-0 list" id="Matematica">Matematica</button>
+                        <button class="w-100 btn btn-outline-light rounded-0 list" id="TPSIT">TPSI</button>
+                        <button class="w-100 btn btn-outline-light rounded-0 list" id="Sistemi">Sistemi e Reti</button>
+                        <button class="w-100 btn btn-outline-light rounded-0 list" id="Italiano">Italiano</button>
+                        <button class="w-100 btn btn-outline-light rounded-0 list" id="Storia">Storia</button>
+                        <button class="w-100 btn btn-outline-light rounded-0 list" id="Inglese">Inglese</button>
+                        <button class="w-100 btn btn-outline-light rounded-0 list" id="GPOI">GPOI</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="d-flex flex-row p-3 bg-dark overflow-scroll" style="width: 73rem;">
+                <div class="card-container">
+                    <div hidden>
+                        <div class="card template mb-3">
+                            <div class="card-header">
+                            </div>
+                            <div class="card-body">
+                                <blockquote class="blockquote mb-0">
+                                <p class="card-text"></p>
+                                </blockquote>
+                            </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="scrollable" id="cards">
+                    <div class="container-for-cards"></div>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <div id="createQuiz">
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-column flex-shrink-0 bg-dark border-end" style="width: 4rem;height: 48rem;">
+                <a href="/dashboardMenu" class="d-block p-3 link-light text-decoration-none text-center" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+                    <h5><i class="bi bi-arrow-left"></i></h5>
+                    <span class="visually-hidden">Icon-only</span>
+                </a>
+                <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                    <li class="nav-item">
+                        <a href="/dashboardMenu" class="nav-link text-white py-3 rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Home" data-bs-original-title="Home">
+                            <h5 class="fw-bold"><i class="bi bi-house"></i></h5>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/AllQuestions" class="nav-link active text-white py-3 rounded-0 bg-gradient" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Orders" data-bs-original-title="Orders">
+                            <h5 class="fw-bold"><i class="bi bi-book"></i></h5>
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="d-flex dropup-center dropup mb-2" data-bs-theme="dark">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 rounded-end-5 rounded-bottom-5 rounded-5" data-bs-toggle="dropdown" id="Mydropdown"><i class="bi bi-person-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button class="dropdown-item" type="button" id="logOut">Log Out</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex flex-row p-3 text-white bg-dark justify-content-center" style="width: 87rem;">
+                <div class="container">
+                    <form id="quizForm" method="post">
+                        <div class="form-floating mb-3 text-black">
+                            <input type="text" class="form-control" id="topic" placeholder="Inserisci l'argomento">
+                            <label for="topic">Inserisci l'argomento</label>
+                        </div>
+                        <div class="form-floating mb-3 text-black">
+                            <input type="number" class="form-control" id="quantity" placeholder="quante domande?">
+                            <label for="quantity">quante domande?</label>
+                        </div>
+                        <select class="form-select mt-3" name="tipo" id="tipo">
+                            <option selected>Seleziona la tipologia di domande...</option>
+                            <option value="multiChoice">Domande a scelta multipla</option>
+                            <option value="vF">Domande vero e falso</option>
+                            <option value="aperta">Domande aperte</option>
+                        </select>
+                        <button class="btn btn-danger mt-3" id="reset"><i class="bi bi-arrow-clockwise"></i>&nbsp;Resetta le UDA</button>
+                        <input type="submit" class="btn btn-primary mt-3" name="quiz-req" id="quiz-req" value="Richiedi Quiz">
+                        <div class="mt-3"><p id="outputSave"></p></div>
+                    </form>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <div id="quiz">
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-column flex-shrink-0 bg-dark border-end" style="width: 4rem;height: 48rem;">
+                <a href="" class="d-block p-3 link-light text-decoration-none text-center" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+                    <h5><i class="bi bi-arrow-left"></i></h5>
+                    <span class="visually-hidden">Icon-only</span>
+                </a>
+                <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                    <li class="nav-item">
+                        <a href="/dashboardMenu" class="nav-link text-white py-3 rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Home" data-bs-original-title="Home">
+                            <h5 class="fw-bold"><i class="bi bi-house"></i></h5>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/AllQuestions" class="nav-link active text-white py-3 rounded-0 bg-gradient" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Orders" data-bs-original-title="Orders">
+                            <h5 class="fw-bold"><i class="bi bi-book"></i></h5>
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="d-flex dropup-center dropup mb-2" data-bs-theme="dark">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 rounded-end-5 rounded-bottom-5 rounded-5" data-bs-toggle="dropdown" id="Mydropdown"><i class="bi bi-person-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button class="dropdown-item" type="button" id="logOut">Log Out</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex flex-row p-3 text-white bg-dark justify-content-center" style="width: 87rem;">
+                <div class="container scrollable border-2" id="quiz-container">
+                    <form action="" method="post" id="saveQuiz">
+                        <div id="topic-input" hidden>
+                            <input type="text" name="topic-quiz" id="topic-quiz">
+                            <input type="text" name="type-quiz" id="type-quiz">
+                            <textarea name="json-quiz" id="json-quiz"></textarea>
+                        </div>
+                        <select class="form-select mt-3" id="materia" name="materia">
+                            <option selected>Seleziona la materia...</option>
+                            </select>
+                            <select class="form-select mt-3" id="uda" name="uda">
+                                <option selected>Seleziona l'UDA..</option>
+                            </select>
+                            <button type="submit" id="saveQuizBtn" class="btn btn-primary">Salva Quiz</button>
+    
+                            <div class="display-6">Questionario</div>
+                        </div>
+                    </form>
+                </div>
+                <script type="text/template" id="quiz-template-multi">
+                    <div class="quiz-item">
+                      <h3 class="quiz-question"><%= domanda %></h3>
+                      <% for(var i = 0; i < risposte.length; i++){ %>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="quiz-<%= index %>" id="quiz-<%= index %>-<%= i %>" value="<%= risposte[i] %>">
+                          <label class="form-check-label" for="quiz-<%= index %>-<%= i %>"><%= risposte[i] %></label>
+                        </div>
+                      <% } %>
+                </script>
+                <script type="text/template" id="quiz-template-aperta">
+                    <div class="quiz-item">
+                      <h3 class="quiz-question"><%= domanda %></h3>
+                        <div class="form-floating mb-3 text-black">
+                          <input class="form-control" type="text" name="quiz-<%= index %>" id="quiz-<%= index %>" value="">
+                          <label for="quiz-<%= index %>">La tua risposta</label>
+                        </div>
+                </script>
+
+            </div>
+        </div>    
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"></script>
     <script>
+        var _ = window._ || require('underscore');
+        var topic = ""
+        var type = ""
+        var jsonQuiz = null
         $(document).ready(function(){
-            $('#welcomeMsg').hide()
-            $('form').on('submit',function(event){
+            // loading Mask
+            $('#loadingMask').fadeOut();
+            $('#dashboardHome').hide()
+            $('#getAllQuestions').hide()
+            $('#createQuiz').hide()
+            $('#quiz').hide()
+
+            // Changing Content
+            $('#showAllQuestionsHome').click(function(){
+                $('#loadingMask').fadeOut();
+                $('#dashboardHome').hide()
+                $('#getAllQuestions').toggle()
+            })
+
+            $('#reset').on('click', function(event){
+                $('#materie').empty();
+                $('#uda').empty()
+                event.preventDefault();
+            })
+
+            // show quiz section
+
+            $('#showQuiz').click(function(){
+                $('#loadingMask').fadeOut();
+                $('#dashboardHome').hide()
+                $('#getAllQuestions').hide()
+                $('#createQuiz').toggle()
+            })
+
+
+            // ajax request when the form is on submit
+            $('#loginAdmin').on('submit',function(event){
                 $.ajax({
                     data : {
                         email : $('#email').val(),
@@ -62,7 +364,8 @@
                 })
                 .done(function(data) {
                     if(data === "Verified"){
-                        window.location.href = '/dashboardMenu';
+                        $('#dashboardHome').toggle()
+                        $('#adminLogin').hide()
                     }else{
                         $('#result').text("Le credenziali non sono corrette!")
                     }
@@ -70,7 +373,267 @@
                 });
                     event.preventDefault()
             })
+            // log out 
+            $('#logOut').on('click', function(event){
+                event.preventDefault()
+                $.ajax({
+                    url : '/logOutAdmin',
+                    success : function(){
+                        $('#dashboardHome').hide()
+                        $('#adminLogin').toggle()
+                    }
+                })
+            })
+
+            // charts
+            const ctx = document.getElementById('adminChart');
+            const barctx = $('#bar')
+            $.ajax({
+                url : '/getChartData',
+                success : function(data){
+                    var arraySubject = []
+                    var arrayCount = []
+                    var jsonData = JSON.parse(data);
+                    console.log(Object.keys(jsonData).length) 
+
+                    for(var i=0; i < Object.keys(jsonData).length; i++){
+                        arraySubject.push(jsonData[i].materia)
+                        arrayCount.push(jsonData[i].conteggio)
+                    }
+
+                    new Chart(ctx, {
+                    type: 'polarArea',
+                    data: {
+                        labels: arraySubject,
+                        datasets: [{
+                            label: 'Materie più ricercate',
+                            data: arrayCount,
+                            backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(255, 205, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(201, 203, 207, 0.5)'
+                            ],
+                            borderColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(255, 159, 64)',
+                                'rgb(255, 205, 86)',
+                                'rgb(75, 192, 192)',
+                                'rgb(54, 162, 235)',
+                                'rgb(153, 102, 255)',
+                                'rgb(201, 203, 207)'
+                            ],
+                            borderWidth: 2
+                        }]
+                    },
+                    
+                    options: {
+                        scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                        }
+                    }
+                    });
+
+                    new Chart(barctx, {
+                    type: 'bar',
+                    data: {
+                        labels: arraySubject,
+                        datasets: [{
+                            label: 'Materie più ricercate',
+                            data: arrayCount,
+                            backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(255, 205, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(201, 203, 207, 0.5)'
+                            ],
+                            borderColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(255, 159, 64)',
+                                'rgb(255, 205, 86)',
+                                'rgb(75, 192, 192)',
+                                'rgb(54, 162, 235)',
+                                'rgb(153, 102, 255)',
+                                'rgb(201, 203, 207)'
+                            ],
+                            borderWidth: 2
+                        }]
+                    },
+                    
+                    options: {
+                        scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                        }
+                    }
+                    });
+                }
+            })
+
+            // create cards out of questions and answers and appending them to a div
+            $('.list').on('click',function(e){
+                $(".cards-container div").not(".cards").remove();
+                $(".container div").not(".cards").remove();
+               
+                var buttonId = $(this).attr('id');
+                $.ajax({
+                    data : {materia : buttonId},
+                    type : 'POST',
+                    url : '/getAllQuestions',
+                    success: (function(data) {
+                        var jsonData = JSON.parse(data);
+                        var cardTemplate = $('.card.template'); // Select the template div
+                        var prevUda = 0
+
+                        $.each(jsonData, function(index, obj) {
+                            if(prevUda !== obj.idUda){
+                                var divs = $('<div class="cards-container" id="idUda-'+ obj.idUda +'">')
+                                prevUda = obj.idUda
+                                divs.appendTo('.container-for-cards')
+                            }
+                        })
+
+                        $.each(jsonData, function(index, item) {
+                            var id = "#" + item.idUda
+                            var idToAppend = '#idUda-' + item.idUda
+                            const elementDiv = $("#" + item.idUda);
+
+                            var card = cardTemplate.clone();    // Clone the template div
+                            card.removeClass('template');       // Remove the template class from the cloned div
+                            card.find('.card-header').text(item.domanda);
+                            card.find('.card-text').text(item.risposta);
+
+                            if (elementDiv.length > 0) {
+                                card.appendTo(id)
+                                $(id).appendTo(idToAppend)
+                            } else {
+                                //console.log("Element with id " + idToCheck + " does not exist on the page");
+                                var newDiv = $('<div class="innerDiv" id="'+ item.idUda +'"></div>')
+                                var newHeader = $('<div><p class="lead text-white uda">'+ item.Uda + '<p></div>')
+                                newHeader.appendTo(newDiv)
+                                card.appendTo(newDiv);
+                                newDiv.appendTo(idToAppend)
+                            }
+                        });
+                        console.log(data)
+                    })
+                })
+            })
+
+            
+            $('#quizForm').on('submit', function(event) {
+                event.preventDefault();
+                type = $('#tipo').val()
+                topic = $('#topic').val()
+                var question = $('#domanda').val()
+                if(question !== ""){
+                $.ajax({
+                    data : {
+                        topic : topic,
+                        quantity : $('#quantity').val(), 
+                        type: type
+                    },
+                    type : 'POST',
+                    url : '/newQuiz'
+                    })
+                .done(function(data) {
+                    $('#createQuiz').hide()
+                    $('#quiz').toggle()
+
+                    $('#topic-quiz').val(topic)
+                    $('#type-quiz').val(type)
+                    $('#json-quiz').text(data)
+                    var quizTemplate = _.template($('#quiz-template-multi').html());
+                    var quizTemplateAperta = _.template($('#quiz-template-aperta').html())
+                    var quizContainer = $('#quiz-container')
+                    jsonQuiz = JSON.parse(data)    
+
+                    console.log(data);
+                    if(type === "multiChoice"){
+                        for(var i = 0; i < jsonQuiz.length; i++){
+                            quizContainer.append(quizTemplate({index: i, domanda: jsonQuiz[i].domanda, risposte: jsonQuiz[i].risposte}));
+                        }
+                    }
+                    if(type === "vF"){
+                        for(var i = 0; i < jsonQuiz.length; i++){
+                            quizContainer.append(quizTemplate({index: i, domanda: jsonQuiz[i].domanda, risposte: ["Vero", "Falso"]}));
+                        }
+                    }
+                    if(type === "aperta"){
+                        for(var i = 0; i < jsonQuiz.length; i++){
+                            quizContainer.append(quizTemplateAperta({index: i, domanda: jsonQuiz[i].domanda}));
+                        }
+                    }
+
+                });
+                }else{
+
+                }
+            })
+
+            $('#saveQuiz').on('submit', function(e){
+                e.preventDefault()
+                $.ajax({
+                    url : '/saveQuiz', 
+                    type : 'POST',
+                    data : {
+                        type :  $('#type-quiz').val(),
+                        topic : $('#topic-quiz').val(),
+                        quiz : $('#json-quiz').val(),
+                        materia : $('#materia').val(),
+                        uda : $('#uda').val()
+                    },
+                    success : function(data){
+                        console.log(data)
+                    }
+                })
+            })
+
+            // get all the subjects 
+            $.ajax({
+                url : '/materieUda',
+                type : 'GET',
+                success: function(data){
+                var jsonData = JSON.parse(data);
+                $.each(jsonData, function(index, item) {
+                    var option = $('<option>').val(item.nomeMateria).text(item.nomeMateria);
+                    console.log(item.nomeMateria)
+                    // Append the option to the select element
+                    $('#materia').append(option);
+                });
+                
+                }
+            })
+
+            // when the subject is changing, all the related uda are also going to change
+            $('#materia').change(function(){
+                var selectedOption = $(this).val();
+                $.ajax({
+                data : {
+                    materia : selectedOption
+                },
+                type : 'POST',
+                url : '/getUda',
+                success : function(data){
+                var jsonData = JSON.parse(data);
+                $.each(jsonData, function(index, item) {
+                    var option = $('<option>').val(item.idUda).text(item.nomeUda);
+                    console.log(item.idUda)
+                    // Append the option to the select element
+                    $('#uda').append(option)
+                })
+                }
+            })
+            })
         })
     </script>
-</body>
-</html>
+{% endblock content%}

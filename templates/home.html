@@ -1,55 +1,87 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300&family=Noto+Serif:wght@400;700&family=Zilla+Slab:wght@500&display=swap" rel="stylesheet">
-  <title>Ripasso</title>
-  <style>
-    #heading{
-      font-family: 'Noto Serif', serif;
-    }
-  </style>
+{% extends 'layout.html' %} 
+  {% block title %} Ripasso {% endblock title %}
+  {% block links %}
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300&family=Noto+Serif:wght@400;700&family=Zilla+Slab:wght@500&display=swap" rel="stylesheet">
+    <style>
+      .card{
+        background-color: rgba(104, 132, 218, 0.698);
+        color: white;
+        border: 1px solid #ffffff;
+      }
+      .card-header{
+        border-bottom: 1px solid #ffffff;
+        font-size: 1.2rem;
+        font-family: 'Noto Serif', serif;
+      }
+      .card-text{
+        font-size: 1.3rem;
+        font-family: 'Barlow Condensed', sans-serif;
+      }
+      .uda{
+        font-family: 'Zilla Slab', serif;
+        font-size: 1.5rem;
+      }
+      #heading{
+        font-family: 'Noto Serif', serif;
+      }
+      .scrollable {
+        height: 46rem; /* set a fixed height for the scrollable area */
+        overflow: scroll; /* create a scrollable area */
+      }
+      .scrollable#forSearch{
+        height: 40rem; /* set a fixed height for the scrollable area */
+        overflow: scroll; /* create a scrollable area */
+      }
 
-</head>
-<body class="bg-dark">
-  <div class="d-flex flex-row">
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark border-end" style="width: 280px;height: 48rem;">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <img src="https://img.icons8.com/emoji/48/null/books-emoji.png"/>&nbsp;&nbsp;<h5 id="heading">Ripetizioni</h5>
-      </a>
-      <hr>
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item"><a href="" class="nav-link text-white" aria-current="page">
-          <p class="fs-5"><strong><i class="bi bi-house"></i>&nbsp;&nbsp;Home</strong></p></a>
-        </li>
-        <li><a href="/search" class="nav-link text-white"><p class="fs-5"><strong><i class="bi bi-search"></i>
-          &nbsp;&nbsp;Cerca</strong></p></a>
-        </li>
-        <li>
-          <a href="/materie" class="nav-link text-white">
-            <p class="fs-5"><strong><i class="bi bi-book"></i>&nbsp;&nbsp;Materie</strong></p></a>
-        </li>
-      </ul>
-      <hr>
-      <div class="d-flex dropup-center dropup" data-bs-theme="dark">
-        <button type="button" class="btn btn-outline-primary dropdown-toggle w-100" data-bs-toggle="dropdown" id="Mydropdown">
-        </button>
-        <ul class="dropdown-menu">
-          <li><button class="dropdown-item" type="button" id="logOut">Log Out</button></li>
+      #headingM{
+          font-family: 'Noto Serif', serif;
+      }
+      .list{
+          font-family: 'Noto Serif', serif;
+          height: 3.5rem !important;
+      }
+    </style>
+  {% endblock links%}
+  {% block content%}
+  <div id="loadingMask" style="width: 100%; height: 100%; position: fixed; background: #fff;">Loading...</div>
+  <div id="home">
+    <div class="d-flex flex-row">
+      <!-- Side Nav dell'home-->
+      <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark border-end" style="width: 280px;height: 48rem;">
+        <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+          <img src="https://img.icons8.com/emoji/48/null/books-emoji.png"/>&nbsp;&nbsp;<h5 id="heading">Ripetizioni</h5>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item"><a href="" class="nav-link text-white" aria-current="page">
+            <p class="fs-5"><strong><i class="bi bi-house"></i>&nbsp;&nbsp;Home</strong></p></a>
+          </li>
+          <li>
+            <button id="searchBar" class="nav-link text-white">
+              <p class="fs-5"><strong><i class="bi bi-search"></i>&nbsp;&nbsp;Cerca</strong></p>
+            </button>
+          </li>
+          <li>
+            <button id="showMaterie" class="nav-link text-white">
+              <p class="fs-5"><strong><i class="bi bi-book"></i>&nbsp;&nbsp;Materie</strong></p>
+            </button>
+          </li>
+          <li>
+            <button id="showQuiz" class="nav-link text-white">
+              <p class="fs-5"><strong><i class="bi bi-list-check"></i>&nbsp;&nbsp;Quiz</strong></p>
+            </button>
+          </li>
         </ul>
-      </div>
-  </div>
-   <div class="d-flex flex-row p-3 text-white bg-dark justify-content-center" style="width: 73rem;">
+        <hr>
+        <div class="d-flex dropup-center dropup" data-bs-theme="dark">
+          <button type="button" class="btn btn-outline-primary dropdown-toggle w-100" data-bs-toggle="dropdown" id="Mydropdown">
+          </button>
+          <ul class="dropdown-menu">
+            <li><button class="dropdown-item" type="button" id="logOut">Log Out</button></li>
+          </ul>
+        </div>
+    </div>
+    <div class="d-flex flex-row p-3 text-white bg-dark justify-content-center" style="width: 73rem;">
       <form method="post" class="p-5 border border-primary">
         <div class="mt-2 mb-2">
           <h5>"Fai una domanda a ChatGPT e scopri quanto può ampliare la tua conoscenza!"</h5>
@@ -87,14 +119,307 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
           </div>
           <div class="toast-body" id="tbody">
-            
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="materie">
+  <div class="d-flex flex-row">
+    <div class="d-flex flex-column flex-shrink-0 bg-dark border-end" style="width: 4rem;height: 48rem;">
+        <a href="/home" class="d-block p-3 link-light text-decoration-none text-center" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+            <h5><i class="bi bi-arrow-left"></i></h5>
+            <span class="visually-hidden">Icon-only</span>
+        </a>
+        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+            <li class="nav-item">
+                <a href="/home" class="w-100 nav-link text-white py-3 rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Home" data-bs-original-title="Home">
+                    <h5 class="fw-bold"><i class="bi bi-house"></i></h5>
+                </a>
+            </li>
+            <li class="nav-item">
+              <button id="searchBarFromMaterie" class="n w-100 nav-link text-white"><h5 class="fw-bold"><i class="bi bi-search"></i></h5>
+              </button>
+            </li>
+            <li class="nav-item">
+              <button id="materieSelf" class="w-100 nav-link active text-white"><h5 class="fw-bold"><i class="bi bi-book"></i></h5>
+              </button>
+            </li>
+            <li>
+              <button id="quizFromMaterie" class="w-100 nav-link active text-white"><h5 class="fw-bold"><i class="bi bi-list-check"></i></h5></button>
+            </li>
+        </ul>
+        <hr>
+        <div class="d-flex dropup-center dropup mb-2" data-bs-theme="dark">
+            <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 rounded-end-5 rounded-bottom-5 rounded-5" data-bs-toggle="dropdown" id="Mydropdown"><i class="bi bi-person-circle"></i>
+            </button>
+            <ul class="dropdown-menu">
+                <li><button class="dropdown-item" type="button" id="logOut">Log Out</button></li>
+            </ul>
+        </div>
+    </div>
+    <div class="d-flex flex-column text-white bg-dark border-end" style="width: 280px;height: 48rem;">
+        <ul class="nav nav-pills flex-column mb-auto" id="sideNav">
+            <li class="nav-item">
+                <div class="text-center mb-2 mt-2">
+                    <img src="https://img.icons8.com/emoji/48/null/books-emoji.png"/>&nbsp;&nbsp;<p id="headingM">Ripeti con chatGPT</p>
+                </div>
+            </li>
+            <li class="nav-item" id="button-group">
+                <button class="w-100 btn btn-outline-light rounded-0 list" id="Informatica">Informatica</button>
+                <button class="w-100 btn btn-outline-light rounded-0 list" id="Matematica">Matematica</button>
+                <button class="w-100 btn btn-outline-light rounded-0 list" id="TPSIT">TPSI</button>
+                <button class="w-100 btn btn-outline-light rounded-0 list" id="Sistemi">Sistemi e Reti</button>
+                <button class="w-100 btn btn-outline-light rounded-0 list" id="Italiano">Italiano</button>
+                <button class="w-100 btn btn-outline-light rounded-0 list" id="Storia">Storia</button>
+                <button class="w-100 btn btn-outline-light rounded-0 list" id="Inglese">Inglese</button>
+                <button class="w-100 btn btn-outline-light rounded-0 list" id="GPOI">GPOI</button>
+            </li>
+        </ul>
+    </div>
+    <div class="d-flex flex-row p-3 bg-dark overflow-scroll" style="width: 73rem;">
+        <div class="card-container">
+            <div hidden>
+                <div class="card template mb-3">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                        <p class="card-text"></p>
+                        </blockquote>
+                    </div>
+                    </div>
+            </div>
+        </div>
+        <div class="scrollable">
+            <div class="container"></div>
         </div>
     </div>
   </div>
 </div>
+<div id="search">
+  <div class="d-flex flex-row">
+    <div class="d-flex flex-column flex-shrink-0 bg-dark border-end" style="width: 5rem;height: 48rem;">
+        <a href="/home" class="d-block p-3 link-light text-decoration-none text-center" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+            <h5><i class="bi bi-arrow-left"></i></h5>
+            <span class="visually-hidden">Icon-only</span>
+        </a>
+        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+          <li class="nav-item">
+              <a href="/home" class="w-100 nav-link text-white py-3 rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Home" data-bs-original-title="Home">
+                  <h5 class="fw-bold"><i class="bi bi-house"></i></h5>
+              </a>
+          </li>
+          <li class="nav-item">
+            <button id="searchSelf" class="n w-100 nav-link active text-white"><h5 class="fw-bold"><i class="bi bi-search"></i></h5>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button id="materieFromSearch" class="w-100 nav-link text-white"><h5 class="fw-bold"><i class="bi bi-book"></i></h5>
+            </button>
+          </li>
+          <li>
+            <button id="quizFromSearch" class="w-100 nav-link active text-white"><h5 class="fw-bold"><i class="bi bi-list-check"></i></h5></button>
+          </li>
+      </ul>
+      <hr>
+      <div class="d-flex dropup-center dropup mb-2" data-bs-theme="dark">
+          <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 rounded-end-5 rounded-bottom-5 rounded-5" data-bs-toggle="dropdown" id="Mydropdown"><i class="bi bi-person-circle"></i>
+          </button>
+          <ul class="dropdown-menu">
+              <li><button class="dropdown-item" type="button" id="logOut">Log Out</button></li>
+          </ul>
+      </div>
+    </div>
+    <div class="d-flex flex-row p-3 text-white bg-dark" style="width: 86rem;">
+        <div class="container">
+            <div class="container-fluid" style="--bs-gutter-x: 22.5rem;">
+                <form method="post" id="searchForm">
+                    <div class="mt-3 mb-3">
+                        <label for="search" class="form-label"></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="word" name="word" placeholder="Inserisci una parola">
+                                <button type="submit" class="btn btn-primary" name="search-btn" id="search-btn"><i class="bi bi-search"></i></button>
+                            </div>
+                    </div>
+                </form>
+            </div>
+            <div class="scrollable" id="forSearch">
+                <div class="container-for-cards"></div>
+            </div>          
+        </div>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="searchToast" class="toast bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header">
+                <img src="https://img.icons8.com/emoji/48/null/books-emoji.png" class="rounded me-2" alt="...">
+                <strong class="me-auto">Ripetizioni</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body">
+                Inserisci la parola chiave da cercare!
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div id="quiz">
+  <div class="d-flex flex-row">
+    <div class="d-flex flex-column flex-shrink-0 bg-dark border-end" style="width: 5rem;height: 48rem;">
+        <a href="/home" class="d-block p-3 link-light text-decoration-none text-center" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+            <h5><i class="bi bi-arrow-left"></i></h5>
+            <span class="visually-hidden">Icon-only</span>
+        </a>
+        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+          <li class="nav-item">
+              <a href="/home" class="w-100 nav-link text-white py-3 rounded-0" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Home" data-bs-original-title="Home">
+                  <h5 class="fw-bold"><i class="bi bi-house"></i></h5>
+              </a>
+          </li>
+          <li class="nav-item">
+            <button id="searchFromQuiz" class="n w-100 nav-link text-white"><h5 class="fw-bold"><i class="bi bi-search"></i></h5>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button id="materieFromQuiz" class="w-100 nav-link text-white"><h5 class="fw-bold"><i class="bi bi-book"></i></h5>
+            </button>
+          </li>
+          <li>
+            <button id="quizSelf" class="w-100 nav-link active text-white"><h5 class="fw-bold"><i class="bi bi-list-check"></i></h5></button>
+          </li>
+      </ul>
+      <hr>
+      <div class="d-flex dropup-center dropup mb-2" data-bs-theme="dark">
+          <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 rounded-end-5 rounded-bottom-5 rounded-5" data-bs-toggle="dropdown" id="Mydropdown"><i class="bi bi-person-circle"></i>
+          </button>
+          <ul class="dropdown-menu">
+              <li><button class="dropdown-item" type="button" id="logOut">Log Out</button></li>
+          </ul>
+      </div>
+    </div>
+    <div class="d-flex flex-column p-3 text-white bg-dark" style="width: 86rem;">
+      <div id="selectTopic">
+          <div class="container-fluid" style="--bs-gutter-x: 22.5rem;">
+            <form method="post" class="p-5 border border-primary">
+              <div class="mt-2 mb-2">
+                <h5>"Quiz"</h5>
+              </div>
+                <div class="mt-3 mb-3" style="width: 30rem;">
+                    <div class="mb-3">
+                        <hr>
+                        <select class="form-select mt-3" id="materiaQuiz" name="materiaQuiz">
+                          <option selected>Seleziona la materia...</option>
+                        </select>
+                        <select class="form-select mt-3" id="udaQuiz" name="udaQuiz">
+                          <option selected>Seleziona l'UDA..</option>
+                        </select>
+                        <select class="form-select mt-3" id="topic" name="topic">
+                          <option selected>Seleziona l'argomento..</option>
+                        </select>
+                        <select class="form-select mt-3" name="tipoDomanda" id="tipoDomanda">
+                          <option selected>Seleziona la tipologia di quiz..</option>
+                          <option value="multiChoice">Domande a scelta multipla</option>
+                          <option value="vF">Domande vero o falso</option>
+                          <option value="aperta">Domande aperte</option>
+                        </select>
+                        <button class="btn btn-danger mt-3" id="resetQuiz"><i class="bi bi-arrow-clockwise"></i>
+                          &nbsp;Resetta le UDA</button>
+                        <input type="button" class="btn btn-primary mt-3" name="getQuiz" id="getQuiz" value="Cerca Quiz">
+                        <div class="mt-3"><p id="outputSave"></p></div>
+                    </div>
+                </div>
+            </form>
+          </div>
+        </div>
+        <div class="scrollable" id="QuizTemp">
+          <div class="row">
+            <div class="col col-3"></div>
+            <div class="col">
+              <form method="post" id="quizForm"></form>
+            </div>
+            <div class="col col-2"></div>
+          </div>
+          <!-- Quiz template per domande a scelta multipla e vero o falso-->
+          <script type="text/template" id="quiz-template-multi">
+            <div class="quiz-item p-3 mt-2">
+              <h5 class="quiz-question"><%= domanda %></h5>
+                <% for(var i = 0; i < risposte.length; i++){ %>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="quiz-<%= index %>" id="quiz-<%= index %>-<%= i %>" value="<%= risposte[i] %>">
+                    <label class="form-check-label" for="quiz-<%= index %>-<%= i %>"><%= risposte[i] %></label>
+                  </div>
+              <% } %>
+                
+            </div>
+          </script>
+          <!-- Quiz template per le domande a risposta aperta-->
+          <script type="text/template" id="quiz-template-aperta">
+            <div class="quiz-item p-3 mt-3">
+              <h5 class="quiz-question"><%= domanda %></h5>
+                <div class="form-floating mb-3 text-black">
+                  <input class="form-control" type="text" name="quiz-<%= index %>" id="quiz-<%= index %>" value="">
+                  <label for="quiz-<%= index %>">La tua risposta</label>
+                </div>
+        </script>
+      </div>  
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"></script>
 <script>
     $(document).ready(function() {
+      // hide contents
+      $('#loadingMask').fadeOut()
+      $('#materie').hide()
+      $('#search').hide()
+      $('#quiz').hide()
+
+      // changing content
+      $('#showMaterie').click(function(){
+        
+        $('#home').hide()
+        $('#materie').fadeToggle(800)
+      })
+      // changing content
+      $('#searchBar').click(function(){
+        $('#home').hide()
+        $('#materie').hide()
+        $('#search').fadeToggle(800)     
+      })
+      $('#searchBarFromMaterie').click(function(){
+        $('#home').hide()
+        $('#materie').hide()
+        $('#search').fadeToggle(800)
+      })
+
+      $('#materieFromSearch').click(function(){
+        $('#home').hide()
+        $('#search').hide()
+        $('#materie').fadeToggle(800)
+      })
+
+      $('#showQuiz').click(function(){
+        $('#home').hide()
+        $('#materie').hide()
+        $('#search').hide()
+        $('#quiz').fadeToggle(800)
+      })
+
+      $('#quizFromSearch').click(function(){
+        $('#home').hide()
+        $('#materie').hide()
+        $('#search').hide()
+        $('#quiz').fadeToggle(800)
+      })
+
+      $('#quizFromMaterie').click(function(){
+        $('#home').hide()
+        $('#materie').hide()
+        $('#search').hide()
+        $('#quiz').fadeToggle(800)
+      })
+
       // For Dropdown button
       const dropdownElementList = document.querySelectorAll('.dropdown-toggle')
       const dropdownList = [...dropdownElementList].map(dropdownToggleEl => new bootstrap.Dropdown(dropdownToggleEl))
@@ -105,6 +430,13 @@
         $('#uda').empty()
         event.preventDefault();
       })
+
+      $('#resetQuiz').on('click', function(event){
+        $('#materieQuiz').empty();
+        $('#udaQuiz').empty()
+        event.preventDefault();
+      })
+
       // Ajax request to get current user name
       $.ajax({
         url : '/getCurrentUser',
@@ -124,9 +456,14 @@
               var option = $('<option>').val(item.nomeMateria).text(item.nomeMateria);
               console.log(item.nomeMateria)
             // Append the option to the select element
-            $('#materia').append(option);
+            $('#materia').append(option)
           });
-          
+          $.each(jsonData, function(index, item) {
+              var option = $('<option>').val(item.nomeMateria).text(item.nomeMateria);
+              console.log(item.nomeMateria)
+            // Append the option to the select element
+            $('#materiaQuiz').append(option)
+          });
         }
       })
       // when an option(subject) is selected from the select list, an ajax request is done to get all the UDA according to the subject selected
@@ -134,7 +471,7 @@
         var selectedOption = $(this).val();
         $.ajax({
         data : {
-          uda : selectedOption
+          materia : selectedOption
         },
         type : 'POST',
         url : '/getUda',
@@ -149,6 +486,93 @@
         }
       })
       })
+
+      $('#materiaQuiz').change(function(){
+        var selectedOption = $(this).val();
+        $.ajax({
+        data : {
+          materia : selectedOption
+        },
+        type : 'POST',
+        url : '/getUda',
+        success : function(data){
+          var jsonData = JSON.parse(data);
+          $.each(jsonData, function(index, item) {
+              var option = $('<option>').val(item.idUda).text(item.nomeUda);
+              console.log(item.idUda)
+              // Append the option to the select element
+              $('#udaQuiz').append(option)
+          })
+        }
+      })
+      })
+
+      $('#udaQuiz').change(function(){
+        var selectedOption = $(this).val();
+        $.ajax({
+        data : {
+          uda : selectedOption
+        },
+        type : 'POST',
+        url : '/getTopic',
+        success : function(data){
+          console.log(data)
+          var jsonData = JSON.parse(data);
+          $.each(jsonData, function(index, item) {
+            var option = $('<option>').val(item.idA).text(item.argomento);
+    
+            // Append the option to the select element
+            $('#topic').append(option)
+          })
+        }
+      })
+      })
+
+      $('#getQuiz').click(function(){
+        $('#selectTopic').hide()
+        $('#QuizTemp').show()
+
+        let type = $('#tipoDomanda').val()
+        $.ajax({
+          data : {
+            topic: $('#topic').val(),
+            type: type,
+            uda : $('#udaQuiz').val()
+          },
+          type : 'POST',
+          url : '/getQuiz',
+          success : function(data){
+            console.log(data);
+            var quizTemplate = _.template($('#quiz-template-multi').html());
+            var quizTemplateAperta = _.template($('#quiz-template-aperta').html())
+            var quizContainer = $('#quizForm');
+            var jsonQuiz = JSON.stringify(data); 
+            var quiz = JSON.parse(jsonQuiz) // parse the string into an array
+
+            console.log(jsonQuiz);
+
+            quizContainer.append('<h5 class="text-center">Quiz</h5>')
+            
+            if (type === "multiChoice"){
+              $.each(quiz, function(index, item){
+                quizContainer.append(quizTemplate({index: index, domanda: item.domanda, risposte: item.risposte}));
+              });
+            }
+            if (type === "vF"){
+              $.each(quiz, function(index, item){
+                quizContainer.append(quizTemplate({index: index, domanda: item.domanda, risposte: ["Vero", "Falso"]}));
+              });
+            }
+            if(type === "aperta"){
+              $.each(quiz, function(index, item){
+                quizContainer.append(quizTemplateAperta({index: index, domanda: item.domanda}));
+              });
+            }
+            quizContainer.append('<div class="d-flex mt-2 mb-3"><input type="button" class="btn btn-primary w-100" value="Invia" id="submitQuiz" name="submitQuiz"></div>')
+          }
+        })
+      })
+
       // When the form is on submit, through an ajax request, this function sends a question to the back end and gets an answer
       $('form').on('submit', function(event) {
         event.preventDefault();
@@ -166,63 +590,168 @@
             console.log(data);
           });
         }else{
-          const toastLiveExample = document.getElementById('liveToast')
-          toastLiveExample.classList.add('text-bg-danger')
+          const toastDom = document.getElementById('liveToast')
+          toastDom.classList.add('bg-danger')
+          toastDom.classList.add('text-white')
           $('#tbody').text('Inserisci una domanda!')
-          const toast = new bootstrap.Toast(toastLiveExample)
+          const toast = new bootstrap.Toast(toastDom)
           toast.show()
         }
-        
-        
       });
         // When the save btn is clicked all the data is sent to the back end
-        $('#save-btn').on('click', function(event){
-          var question =  $('#domanda').val()
-          var answer = $('#response').val()
+      $('#save-btn').on('click', function(event){
+        var question =  $('#domanda').val()
+        var answer = $('#response').val()
 
-          if(question == "" && answer == ""){
-            const toastLiveExample = document.getElementById('liveToast')
-            toastLiveExample.classList.add('text-bg-danger')
-              $('#tbody').text('Controlla se i campi sono vuoti!')
-              const toast = new bootstrap.Toast(toastLiveExample)
-              toast.show()
-            //$('#outputSave').addClass('text-danger')
-            //$('#outputSave').text("I campi sono vuoti");
-          }else{
-            $.ajax({
-              data:{
-                question : $('#domanda').val(),
-                answer : $('#response').val(),
-                materia : $('#materia').val(),
-                uda : $('#uda').val()
-              },
-              type : 'POST',
-              url : '/newDomanda'
-            })
-            .done(function(){
-              const toastLiveExample = document.getElementById('liveToast')
-              toastLiveExample.classList.add('text-bg-success')
-              $('#tbody').text('I dati sono stati salvati correttamenti!')
-              const toast = new bootstrap.Toast(toastLiveExample)
-              toast.show()
-              //$('#outputSave').text("Salvato con successo");
-            })
-          }
-          
-          event.preventDefault();
-        })
-        // log out funzione
-        $('#logOut').on('click', function(event){
-          event.preventDefault()
+        if(question == "" && answer == ""){
+          const toastLiveExample = document.getElementById('liveToast')
+          toastLiveExample.classList.add('bg-danger')
+          toastLiveExample.classList.add('text-white')
+          $('#tbody').text('Controlla se i campi sono vuoti!')
+          const toast = new bootstrap.Toast(toastLiveExample)
+          toast.show()
+        }else{
           $.ajax({
-            url : '/logOut',
-            success : function(){
-              window.location.href = '/login'
-            }
+            data:{
+              question : $('#domanda').val(),
+              answer : $('#response').val(),
+              materia : $('#materia').val(),
+              uda : $('#uda').val()
+            },
+            type : 'POST',
+            url : '/newDomanda'
           })
+          .done(function(){
+            const toastLiveExample = document.getElementById('liveToast')
+            toastLiveExample.classList.add('bg-success')
+            toastLiveExample.classList.add('text-white')
+            $('#tbody').text('I dati sono stati salvati correttamenti!')
+            const toast = new bootstrap.Toast(toastLiveExample)
+            toast.show()
+            //$('#outputSave').text("Salvato con successo");
+          })
+        }
+        
+        event.preventDefault();
+      })
+
+      // show all the questions related to subjects
+      $('.list').on('click',function(e){
+        $(".cards-container div").not(".cards").remove();
+        $(".container div").not(".cards").remove();
+        
+        var buttonId = $(this).attr('id');
+        $.ajax({
+            data : {materia : buttonId},
+            type : 'POST',
+            url : '/getDomandeRis',
+            success: (function(data) {
+              var jsonData = JSON.parse(data);
+              var cardTemplate = $('.card.template'); // Select the template div
+              var prevUda = 0
+
+              $.each(jsonData, function(index, obj) {
+                if(prevUda !== obj.idUda){
+                  var divs = $('<div class="cards-container" id="idUda-'+ obj.idUda +'">')
+                  prevUda = obj.idUda
+                  divs.appendTo('.container')
+                }
+              })
+
+              $.each(jsonData, function(index, item) {
+                var id = "#" + item.idUda
+                var idToAppend = '#idUda-' + item.idUda
+                const elementDiv = $("#" + item.idUda);
+
+                var card = cardTemplate.clone(); // Clone the template div
+                card.removeClass('template'); // Remove the template class from the cloned div
+                card.find('.card-header').text(item.domanda);
+                card.find('.card-text').text(item.risposta);
+
+                if (elementDiv.length > 0) {
+                  card.appendTo(id)
+                  $(id).appendTo(idToAppend)
+                } else {
+                  //console.log("Element with id " + idToCheck + " does not exist on the page");
+                  var newDiv = $('<div class="innerDiv" id="'+ item.idUda +'"></div>')
+                  var newHeader = $('<div><p class="lead text-white uda">'+ item.Uda + '<p></div>')
+                  newHeader.appendTo(newDiv)
+                  card.appendTo(newDiv);
+                  newDiv.appendTo(idToAppend)
+                }
+              });
+              console.log(data)
+            })
         })
-    });
+      })
+        // search bar 
+      $('#searchForm').on('submit', function(event){
+        $(".scrollable div").not(".container-for-cards").remove();
+        //$(".container div").not(".cards").remove();
+        event.preventDefault()
+        var word = $('#word').val().toLowerCase()
+        if(word !== ""){
+            $.ajax({
+            data : {word : word},
+            url : '/searchWord',
+            type : 'POST',
+            success : function(data){
+
+                var jsonData = JSON.parse(data);
+                var cardTemplate = $('.card.template'); // Select the template div
+                var prevUda = 0
+
+                $.each(jsonData, function(index, obj) {
+                    if(prevUda !== obj.idUda){
+                        var divs = $('<div class="cards-container" id="idUda-'+ obj.idUda +'">')
+                        prevUda = obj.idUda
+                        divs.appendTo('.container-for-cards')
+                    }
+                })
+
+                $.each(jsonData, function(index, item) {
+                  var id = "#" + item.idUda
+                  var idToAppend = '#idUda-' + item.idUda
+                  const elementDiv = $("#" + item.idUda);
+
+                  var card = cardTemplate.clone(); // Clone the template div
+                  card.removeClass('template'); // Remove the template class from the cloned div
+                  card.find('.card-header').text(item.domanda);
+                  card.find('.card-text').text(item.risposta);
+
+                  if (elementDiv.length > 0) {
+                    card.appendTo(id)
+                    $(id).appendTo(idToAppend)
+                  } else {
+                    //console.log("Element with id " + idToCheck + " does not exist on the page");
+                    var newDiv = $('<div class="innerDiv" id="'+ item.idUda +'"></div>')
+                    var newHeader = $('<div><p class="lead text-white uda">'+ item.Uda + '<p></div>')
+                    var newSubject = $('<div class="text-subject p-1 rounded-3"><h5 class="text-white">'+ item.materia + '<h5></div>')
+                    
+                    newSubject.appendTo(newDiv)
+                    newHeader.appendTo(newDiv)
+                    card.appendTo(newDiv);
+                    newDiv.appendTo(idToAppend)
+                  }
+                });
+            }
+        })
+      }else{
+        const toastLiveExample = document.getElementById('searchToast')
+        const toast = new bootstrap.Toast(toastLiveExample)
+        toast.show()
+      }    
+    })
+    // log out funzione
+    $('#logOut').on('click', function(event){
+      event.preventDefault()
+      $.ajax({
+        url : '/logOut',
+        success : function(){
+          window.location.href = '/login'
+        }
+      })
+    })
+  });
 </script>
-</div>
-</body>
-</html>
+{% endblock content%}
